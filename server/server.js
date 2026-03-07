@@ -12,8 +12,12 @@ import messageRoutes from './routes/messages.js';
 
 const app = express();
 
-// Middleware
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+const allowedOrigins = [
+    'http://localhost:5173',
+    process.env.FRONTEND_URL, // e.g. https://repsync.vercel.app
+].filter(Boolean); // Remove undefined if FRONTEND_URL is not set
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 
 // Routes
